@@ -8,12 +8,22 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import android.widget.Toast;
+
+import com.google.android.material.tabs.TabItem;
+import com.google.android.material.tabs.TabLayout;
+
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
+        Database obj_db = new Database();
+
 
         Button btn_open_register = (Button) findViewById(R.id.btn_open_register);
         Button btn_open_search = (Button) findViewById(R.id.btn_open_search);

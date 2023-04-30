@@ -7,6 +7,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 public class Register extends AppCompatActivity {
@@ -16,6 +18,7 @@ public class Register extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.register);
 
+        Database obj_db = new Database();
         Model obj_model = new Model();
 
         EditText id = (EditText) findViewById(R.id.txtId);
@@ -36,10 +39,18 @@ public class Register extends AppCompatActivity {
                 obj_model.setRoom(room.getText().toString());
                 obj_model.setDate(date.getText().toString());
                 obj_model.setHour(hour.getText().toString());
-                Toast.makeText(Register.this, "Datos registrados", Toast.LENGTH_LONG).show();
+                obj_db.connectSQL();
+                boolean confirm = obj_db.insertRecord(obj_model.getId(), obj_model.getName(), obj_model.getDoc(), obj_model.getRoom(), obj_model.getDate(), obj_model.getHour());
+                if (confirm) {
+                    Toast.makeText(Register.this, "Datos registrados correctamente", Toast.LENGTH_LONG).show();
+                }
+                else {
+
+                    Toast.makeText(Register.this, "Ha ocurrido un error Verifica los datos",Toast.LENGTH_LONG).show();
+                }
+
             }
         });
-
 
         btnBack.setOnClickListener(new View.OnClickListener(){
 
@@ -53,6 +64,7 @@ public class Register extends AppCompatActivity {
 
 
     }
+
 
 
 
