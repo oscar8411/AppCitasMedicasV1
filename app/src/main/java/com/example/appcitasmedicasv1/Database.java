@@ -7,13 +7,14 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.util.ArrayList;
 import java.sql.*;
+import java.sql.SQLException;
 
 public class Database {
 
     Connection connect;
     String url = "jdbc:mysql://35.193.81.231:3306/db_citas";
     String user = "root";
-    String password = "12345";
+    String password = "12345}";
     String instructionSQL;
 
 
@@ -23,20 +24,23 @@ public class Database {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
             Class.forName("com.mysql.jdbc.Driver");
-            connect = DriverManager.getConnection(url, user, password);
-            Log.d("myTag", "Succesfull connection");
+            connect = DriverManager.getConnection(url,user,password);
+            Log.d("MyTag", "Succesfull connection");
             return true;
 
-        } catch (Exception err) {
-            Log.d("myTag", err.toString());
+        } catch (SQLException err) {
+            System.out.println(err.getMessage());
+            //Log.d("myTag", err.toString());
             return false;
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
     }
 
 
     public boolean insertRecord (int id, String name, String doc, String room, String date, String hour) {
-        // instructionSQL = "INSERT INTO citas VALUES (" + id + ", '" + name + "', '" + doc + "', '" +  room +  "', '" +  date +  "', '" +  hour +  "')";
-        instructionSQL = "INSERT INTO citas VALUES (" + id + ", '" + name + "', '" + doc + "', '" +  room +  "', '2023-05-03', '" +  hour +  "')";
+        instructionSQL = "INSERT INTO citas VALUES (" + id + ", '" + name + "', '" + doc + "', '" +  room +  "', '" +  date +  "', '" +  hour +  "')";
+        //instructionSQL = "INSERT INTO citas VALUES (" + id + ", '" + name + "', '" + doc + "', '" +  room +  "', '2023-05-03', '" +  hour +  "')";
 
         try {
             connect.prepareStatement(instructionSQL).execute();

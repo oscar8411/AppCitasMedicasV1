@@ -41,7 +41,7 @@ public class Register extends AppCompatActivity {
                 obj_model.setHour(hour.getText().toString());
                 obj_db.connectSQL();
                 boolean confirm = obj_db.insertRecord(obj_model.getId(), obj_model.getName(), obj_model.getDoc(), obj_model.getRoom(), obj_model.getDate(), obj_model.getHour());
-                if (confirm) {
+                if (confirm == true) {
                     Toast.makeText(Register.this, "Datos registrados correctamente", Toast.LENGTH_LONG).show();
                 }
                 else {

@@ -2,12 +2,15 @@ package com.example.appcitasmedicasv1;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import java.util.ArrayList;
 
 public class Search extends AppCompatActivity {
 
@@ -17,6 +20,8 @@ public class Search extends AppCompatActivity {
         super.onCreate((savedInstanceState));
         setContentView(R.layout.search);
 
+        Database obj_db = new Database ();
+        ListView listRecord = (ListView) findViewById(R.id.listRecord);
         Button btnsearch = (Button) findViewById(R.id.btnSearch);
         Button btnBack = (Button) findViewById(R.id.btnBack2);
 
@@ -24,14 +29,16 @@ public class Search extends AppCompatActivity {
         btnsearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ListView listRecords = (ListView) findViewById(R.id.listRecord);
-                String[] dataArray = {"80871555 - OSCAR BUITRAGO - ISABELLA HERNANDEZ - 444 - 2023-05-02 - 08:00",
-                        };
+                obj_db.connectSQL();
+                ArrayList<String> data = obj_db.consultTable();
                 ArrayAdapter adapter = new ArrayAdapter<String>(Search.this,
-                        com.google.android.material.R.layout.support_simple_spinner_dropdown_item, dataArray);
-                listRecords.setAdapter(adapter);
+                        com.google.android.material.R.layout.support_simple_spinner_dropdown_item,
+                        data);
+                listRecord.setAdapter(adapter);
 
             }
+
+
         });
 
         btnBack.setOnClickListener(new View.OnClickListener(){
